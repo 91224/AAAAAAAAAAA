@@ -1,0 +1,62 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.2'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// Log4j2 and Log4jdbc
+	implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+	implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16'
+
+	// MyBatis Core and Spring Integration
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+
+	// MySql
+	implementation 'mysql:mysql-connector-java:8.0.32'
+
+	// HikariCP
+	implementation 'com.zaxxer:HikariCP:5.0.1'
+
+	// Test dependencies for JUnit 4
+	testImplementation 'junit:junit:4.13.2'
+	testImplementation 'org.springframework:spring-test:6.0.9'
+}
+
+tasks.named('test') {
+	useJUnit()
+}
